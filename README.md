@@ -7,11 +7,11 @@ Programm gets the input image, that is split into four quads. Each quad is fille
 
 The first animation - with border.
 
-![Animation](https://imgur.com/lbZ8nGb.gif)
+![Animation](https://imgur.com/nknqK1t.gif)
 
 The second animation - without border.
 
-![Animation](https://imgur.com/TiKeFwH.gif)
+![Animation](https://imgur.com/u6WGSjr.gif)
 
 ### Usage
 
@@ -21,5 +21,7 @@ The second animation - without border.
   
   quadify.exe <input file path> <output file extension(.png or .jpg)>
   
-  You can change repeat count by UP and DOWN arrow-buttons.
-  To save image click SPACE.
+  You can change repeat count by UP and DOWN arrow buttons and minimum size of quad by LEFT and RIGHT arrow buttons.
+  To save image - click SPACE.
+  To show/hide borders - click B.
+  
