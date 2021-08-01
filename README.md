@@ -7,11 +7,11 @@ Programm gets the input image, that is split into four quads. Each quad is fille
 
 The first animation - with border.
 
-![Animation](https://imgur.com/lbZ8nGb)
+![Animation](https://imgur.com/lbZ8nGb.gif)
 
 The second animation - without border.
 
-![Animation](https://imgur.com/TiKeFwH)
+![Animation](https://imgur.com/TiKeFwH.gif)
 
 ### Usage
 
