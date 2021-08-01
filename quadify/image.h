@@ -4,9 +4,9 @@
 #include <stdio.h>
 
 typedef struct Image {
-	uint8* pixels;
 	uint size;
 	uint width, height;		
+	uint8* pixels;
 }Image;
 
 int getPixelIndex(Image image, int x, int y);

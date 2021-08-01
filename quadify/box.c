@@ -1,17 +1,10 @@
 #include "box.h"
 
-#define STB_IMAGE_IMPLEMENTATION  
-#include "stb_image.h"
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
-#define STB_IMAGE_RESIZE_IMPLEMENTATION
-#include "stb_image_resize.h"
-
+#include <memory.h>
+#include <stdlib.h>
 
 void splitBox(Image *in, Box *box, Box *boxes, uint size)
 {
-	Box *quads = malloc(sizeof(Box) * 4);
-
 	int w = (*box).width / 2;
 	int h = (*box).height / 2;
 
@@ -174,7 +167,22 @@ Box createBox(int x, int y, int width, int height, int delta_color, Color color)
 }
 
 Image quadify(Image *in, uint rep_count, int min_width) {
-	Image out = (*in);
+	Image out;
+	out.height = in->height;
+	out.width = in->width;
+	out.size = in->size;
+	out.pixels = malloc(sizeof(uint8)*in->size);
+
+	memcpy(out.pixels, in->pixels, sizeof(uint8)*in->size);
+
+	Color c;
+	c = getPixel(*in, 50, 50);
+	printf("%d %d %d\n", c.r, c.g, c.b);
+
+	setPixel(&out, 50, 50, createColor(123,123,123));
+
+	c = getPixel(*in, 50, 50);
+	printf("%d %d %d\n", c.r, c.g, c.b);
 
 
 	Box img;
@@ -199,6 +207,8 @@ Image quadify(Image *in, uint rep_count, int min_width) {
 	}
 
 	drawBoxes(&out, boxes, box_count);
+
+	free(boxes);
 
 	return out;
 }

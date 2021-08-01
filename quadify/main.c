@@ -4,8 +4,9 @@
 
 #define main main
 
-Image img_in;
-
+Image in, out;
+SDL_Surface *image_surface;
+Window window;
 uint repeat_count;
 
 void init(int argc, char *argv[]) {
@@ -36,31 +37,40 @@ void init(int argc, char *argv[]) {
 		exit(-1);
 	}
 
-	img_in = load_image(img_1);
+	in = load_image(img_1);
 
 	fclose(img_1);
 	fclose(img_2);
 	remove(argv[2]);
+	window = windowInit(SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 600, 600, "Quadify 1.0v", SDL_WINDOW_SHOWN);
+}
+
+void updateImage() {
+	image_surface = NULL;
+
+	out = quadify(&in, repeat_count, 10);
+
+	image_surface = loadSurfaceFromMemory(out);
+	
+	image_surface = resizeSurface(image_surface, window.w-4, window.h-4);
 }
 
 int main(int argc, char *argv[]) {
 	init(argc, argv);
+	
+	updateImage();
 
-	Image out = quadify(&img_in, repeat_count, 20);
-	//if (strstr(argv[2], ".png") != NULL) {
-	//	save_png(img_out, argv[2]);
-	//}
-	//else {
-	//	save_jpg(img_out, argv[2], 100);
-	//}
+	if (strstr(argv[2], ".png") != NULL) {
+		save_png(out, argv[2]);
+	}
+	else {
+		save_jpg(out, argv[2], 100);
+	}
 
-	Window window = windowInit(SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 600, 600, "Quadify 1.0v", SDL_WINDOW_SHOWN);
+
 
 
 	uint8 close = 0;
-
-	SDL_Surface *surf = loadSurfaceFromMemory(out, window.surface->format);
-
 
 	while (!close) {
 		SDL_Event e;
@@ -68,11 +78,29 @@ int main(int argc, char *argv[]) {
 			if (e.type == SDL_QUIT) {
 				close = 1;
 			}
+			else if (e.type == SDL_KEYDOWN)
+			{
+				switch (e.key.keysym.sym)
+				{
+				case SDLK_UP:
+					repeat_count++;
+					updateImage();
+					break;
+				case SDLK_DOWN:
+					if (repeat_count > 1) {
+						repeat_count--;
+						updateImage();
+					}
+					break;
+				default:
+					break;
+				}
+			}
+
 		}
 
-		windowSwapSurface(&window, surf);
+		windowSwapSurface(&window, image_surface);
 	}
-
 
 	windowDestroy(&window);
 

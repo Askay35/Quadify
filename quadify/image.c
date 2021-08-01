@@ -1,5 +1,12 @@
 #include "image.h"
 
+#define STB_IMAGE_IMPLEMENTATION  
+#include "stb_image.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
+#define STB_IMAGE_RESIZE_IMPLEMENTATION
+#include "stb_image_resize.h"
+
 
 int save_jpg(Image image, char* filename, uint8 quality) {
 	return stbi_write_jpg(filename, image.width, image.height, RGB, image.pixels, quality);
@@ -12,7 +19,6 @@ int save_png(Image image, char* filename) {
 Color getPixel(Image image, int x, int y) {
 	int index = getPixelIndex(image, x, y);
 	Color color = createColor(0, 0, 0);
-	printf("%d %d\n", index, image.size);
 	if (index + 2 < image.size) {
 		color.r = image.pixels[index];
 		color.g = image.pixels[index + 1];

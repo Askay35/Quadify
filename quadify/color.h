@@ -3,6 +3,7 @@
 #include "types.h"
 
 #define RGB 3
+#define DEPTH 24
 
 
 typedef struct Color {
