@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
 
 	updateImage();
 	
-	SDL_Rect window_rect = { 0,0,window.w-10, window.h-10};
+	SDL_Rect window_rect = { 0,0,window.w, window.h};
 
 	uint8 close = 0;
 
