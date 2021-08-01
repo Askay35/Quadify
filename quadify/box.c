@@ -86,7 +86,7 @@ int maxDelta(Box *boxes, uint size, int max_width) {
 }
 
 
-void drawBox(Image *out, Box box) {
+void drawBox(Image *out, Box box, uint8 border) {
 	for (uint _x = box.x; _x < box.x + box.width; _x++)
 	{
 		for (uint _y = box.y; _y < box.y + box.height; _y++)
@@ -94,23 +94,25 @@ void drawBox(Image *out, Box box) {
 			setPixel(out, _x, _y, box.color);
 		}
 	}
-	Color black = createColor(0, 0, 0);
-	for (uint x = box.x; x < box.x + box.width; x++)
-	{
-		setPixel(out, x, box.y, black);
-		setPixel(out, x, box.y + box.height, black);
-	}
-	for (uint y = box.y; y < box.y + box.height; y++)
-	{
-		setPixel(out, box.x + box.width, y, black);
-		setPixel(out, box.x, y, black);
+	if (border != 0) {
+		Color black = createColor(0, 0, 0);
+		for (uint x = box.x; x < box.x + box.width+1; x++)
+		{
+			setPixel(out, x, box.y, black);
+			setPixel(out, x, box.y + box.height, black);
+		}
+		for (uint y = box.y; y < box.y + box.height+1; y++)
+		{
+			setPixel(out, box.x + box.width, y, black);
+			setPixel(out, box.x, y, black);
+		}
 	}
 }
 
-void drawBoxes(Image *out, Box *boxes, uint size) {
+void drawBoxes(Image *out, Box *boxes, uint size, uint8 border) {
 	for (uint i = 0; i < size; i++)
 	{
-		drawBox(out, boxes[i]);
+		drawBox(out, boxes[i], border);
 	}
 }
 
@@ -162,11 +164,10 @@ Box createBox(int x, int y, int width, int height, int delta_color, Color color)
 	box.delta_color = delta_color;
 	box.color = color;
 	box.splited = 0;
-
 	return box;
 }
 
-Image quadify(Image *in, uint rep_count, int min_width) {
+Image quadify(Image *in, uint rep_count, int min_width, uint8 border) {
 	Image out;
 	out.height = in->height;
 	out.width = in->width;
@@ -188,7 +189,6 @@ Image quadify(Image *in, uint rep_count, int min_width) {
 
 	boxes[0] = img;
 
-
 	for (uint i = 0; i < rep_count; i++)
 	{
 		int size = 1 + i * 4;
@@ -196,7 +196,7 @@ Image quadify(Image *in, uint rep_count, int min_width) {
 		splitBox(in, &boxes[max_delta], boxes, size);
 	}
 
-	drawBoxes(&out, boxes, box_count);
+	drawBoxes(&out, boxes, box_count, border);
 
 	free(boxes);
 

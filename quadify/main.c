@@ -10,11 +10,13 @@ Image in, out;
 SDL_Surface *image_surface;
 Window window;
 uint repeat_count;
+uint min_width=10;
 SDL_Texture *image_tex;
+
+uint8 border = 0;
 
 void init(int argc, char *argv[]) {
 	FILE *img_1, *img_2;
-
 
 	if (argc - 1 > 3) {
 		printf("Too many arguments!");
@@ -57,32 +59,29 @@ void init(int argc, char *argv[]) {
 }
 
 void updateImage() {
-
 	free(out.pixels);
+	SDL_FreeSurface(image_surface);
+	SDL_DestroyTexture(image_tex);
 
-	out = quadify(&in, repeat_count, 10);
-
+	out = quadify(&in, repeat_count, min_width, border);
 	image_surface = loadSurfaceFromMemory(out);
-	
 	image_tex = SDL_CreateTextureFromSurface(window.renderer, image_surface);	
 	
-	SDL_FreeSurface(image_surface);
 }
 
 
 int main(int argc, char *argv[]) {
 	init(argc, argv);
-	window = windowInit(SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 600, 600, "Quadify 1.0v", SDL_WINDOW_SHOWN);
+	
+	window = windowInit(SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 600, 600, "Quadify", SDL_WINDOW_SHOWN);
 
 	updateImage();
 	
-
-	SDL_Rect window_rect = { 0,0,window.w-4, window.h-4};
+	SDL_Rect window_rect = { 0,0,window.w-10, window.h-10};
 
 	uint8 close = 0;
 
 	char *fpath = (char*)malloc(strlen(argv[2]+1+10));
-
 
 	while (!close) {
 		SDL_Event e;
@@ -103,6 +102,25 @@ int main(int argc, char *argv[]) {
 						repeat_count--;
 						updateImage();
 					}
+					break;
+				case SDLK_LEFT:
+					if (min_width > 8) {
+						min_width -= 2;
+						updateImage();
+					}
+					break;
+				case SDLK_RIGHT:
+					min_width += 2;
+					updateImage();
+					break;
+				case SDLK_b:
+					if (border) {
+						border = 0;
+					}
+					else {
+						border = 1;
+					}
+					updateImage();
 					break;
 				case SDLK_SPACE:
 					_itoa(repeat_count, fpath, 10);
