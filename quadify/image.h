@@ -15,9 +15,9 @@ int getPixelIndex(Image image, int x, int y);
 
 Image load_image(FILE *file);
 
-int save_jpg(Image image, char* filename, uint8 quality);
+int saveJpg(Image image, char* filename, uint8 quality);
 
-int save_png(Image image, char* filename);
+int savePng(Image image, char* filename);
 
 Color getPixel(Image image, int x, int y);
 	

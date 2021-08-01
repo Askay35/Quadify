@@ -4,23 +4,21 @@
 #include "stb_image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
-#define STB_IMAGE_RESIZE_IMPLEMENTATION
-#include "stb_image_resize.h"
 
 int saveImage(Image *image, char *path) {
 	if (strstr(path, ".png") != NULL) {
-		save_png(*image, path);
+		savePng(*image, path);
 	}
 	else {
-		save_jpg(*image, path, 100);
+		saveJpg(*image, path, 100);
 	}
 }
 
-int save_jpg(Image image, char* filename, uint8 quality) {
+int saveJpg(Image image, char* filename, uint8 quality) {
 	return stbi_write_jpg(filename, image.width, image.height, RGB, image.pixels, quality);
 }
 
-int save_png(Image image, char* filename) {
+int savePng(Image image, char* filename) {
 	return stbi_write_png(filename, image.width, image.height, RGB, image.pixels, image.width*RGB);
 }
 
@@ -47,6 +45,7 @@ void setPixel(Image *image, int x, int y, Color color) {
 
 Image load_image(FILE *file) {
 	Image img;
+
 	img.pixels = stbi_load_from_file(file, &img.width, &img.height, NULL, RGB);
 
 	int size = img.width * img.height * RGB;

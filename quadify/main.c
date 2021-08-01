@@ -22,15 +22,17 @@ void init(int argc, char *argv[]) {
 	}
 	if (argc - 1 < 3) {
 	
-		if (argc == 2) {
-			repeat_count = 0;
+		if (argc == 3) {
+			repeat_count = 1;
 		}
 		else {
 			printf("Too few arguments!");
 			exit(-1);
 		}
 	}
-	sscanf(argv[3], "%d", &repeat_count);
+	else {
+		sscanf(argv[3], "%d", &repeat_count);
+	}
 
 	
 	if ((img_1 = fopen(argv[1], "rb")) == NULL) {
@@ -55,24 +57,27 @@ void init(int argc, char *argv[]) {
 }
 
 void updateImage() {
-	image_surface = NULL;
+
+	free(out.pixels);
 
 	out = quadify(&in, repeat_count, 10);
 
 	image_surface = loadSurfaceFromMemory(out);
-
-	image_tex = SDL_CreateTextureFromSurface(window.renderer, image_surface);
+	
+	image_tex = SDL_CreateTextureFromSurface(window.renderer, image_surface);	
+	
+	SDL_FreeSurface(image_surface);
 }
 
 
 int main(int argc, char *argv[]) {
 	init(argc, argv);
-	window = windowInit(SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 600, 700, "Quadify 1.0v", SDL_WINDOW_SHOWN);
+	window = windowInit(SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 600, 600, "Quadify 1.0v", SDL_WINDOW_SHOWN);
 
 	updateImage();
 	
 
-	SDL_Rect window_rect = { 0,0,600, 600};
+	SDL_Rect window_rect = { 0,0,window.w-4, window.h-4};
 
 	uint8 close = 0;
 
@@ -122,6 +127,7 @@ int main(int argc, char *argv[]) {
 	free(fpath);
 	windowDestroy(&window);
 	SDL_DestroyTexture(image_tex);
+	SDL_FreeSurface(image_surface);
 
 	return 0;
 }

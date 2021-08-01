@@ -32,7 +32,8 @@ Window windowInit(int x, int y, int width, int height, char* title, int flag) {
 		windowDestroy(&wind);
 	}
 
-	SDL_GetWindowSize(wind.window, &wind.w, &wind.h);
+	wind.w = width;
+	wind.h = height;
 
 	return wind;
 }

@@ -94,17 +94,17 @@ void drawBox(Image *out, Box box) {
 			setPixel(out, _x, _y, box.color);
 		}
 	}
-	//Color black = createColor(0, 0, 0);
-	//for (uint x = box.x; x < box.x + box.width; x++)
-	//{
-	//	setPixel(out, x, box.y, black);
-	//	setPixel(out, x, box.y + box.height, black);
-	//}
-	//for (uint y = box.y; y < box.y + box.height; y++)
-	//{
-	//	setPixel(out, box.x + box.width, y, black);
-	//	setPixel(out, box.x, y, black);
-	//}
+	Color black = createColor(0, 0, 0);
+	for (uint x = box.x; x < box.x + box.width; x++)
+	{
+		setPixel(out, x, box.y, black);
+		setPixel(out, x, box.y + box.height, black);
+	}
+	for (uint y = box.y; y < box.y + box.height; y++)
+	{
+		setPixel(out, box.x + box.width, y, black);
+		setPixel(out, box.x, y, black);
+	}
 }
 
 void drawBoxes(Image *out, Box *boxes, uint size) {
