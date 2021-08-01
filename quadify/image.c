@@ -7,6 +7,14 @@
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
 #include "stb_image_resize.h"
 
+int saveImage(Image *image, char *path) {
+	if (strstr(path, ".png") != NULL) {
+		save_png(*image, path);
+	}
+	else {
+		save_jpg(*image, path, 100);
+	}
+}
 
 int save_jpg(Image image, char* filename, uint8 quality) {
 	return stbi_write_jpg(filename, image.width, image.height, RGB, image.pixels, quality);

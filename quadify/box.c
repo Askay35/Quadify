@@ -1,6 +1,6 @@
 #include "box.h"
 
-#include <memory.h>
+#include <malloc.h>
 #include <stdlib.h>
 
 void splitBox(Image *in, Box *box, Box *boxes, uint size)
@@ -94,17 +94,17 @@ void drawBox(Image *out, Box box) {
 			setPixel(out, _x, _y, box.color);
 		}
 	}
-	Color black = createColor(0, 0, 0);
-	for (uint x = box.x; x < box.x + box.width; x++)
-	{
-		setPixel(out, x, box.y, black);
-		setPixel(out, x, box.y + box.height, black);
-	}
-	for (uint y = box.y; y < box.y + box.height; y++)
-	{
-		setPixel(out, box.x + box.width, y, black);
-		setPixel(out, box.x, y, black);
-	}
+	//Color black = createColor(0, 0, 0);
+	//for (uint x = box.x; x < box.x + box.width; x++)
+	//{
+	//	setPixel(out, x, box.y, black);
+	//	setPixel(out, x, box.y + box.height, black);
+	//}
+	//for (uint y = box.y; y < box.y + box.height; y++)
+	//{
+	//	setPixel(out, box.x + box.width, y, black);
+	//	setPixel(out, box.x, y, black);
+	//}
 }
 
 void drawBoxes(Image *out, Box *boxes, uint size) {
@@ -174,16 +174,6 @@ Image quadify(Image *in, uint rep_count, int min_width) {
 	out.pixels = malloc(sizeof(uint8)*in->size);
 
 	memcpy(out.pixels, in->pixels, sizeof(uint8)*in->size);
-
-	Color c;
-	c = getPixel(*in, 50, 50);
-	printf("%d %d %d\n", c.r, c.g, c.b);
-
-	setPixel(&out, 50, 50, createColor(123,123,123));
-
-	c = getPixel(*in, 50, 50);
-	printf("%d %d %d\n", c.r, c.g, c.b);
-
 
 	Box img;
 	img.x = 0;

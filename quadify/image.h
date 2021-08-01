@@ -9,6 +9,8 @@ typedef struct Image {
 	uint8* pixels;
 }Image;
 
+int saveImage(Image *image, char *path);
+
 int getPixelIndex(Image image, int x, int y);
 
 Image load_image(FILE *file);

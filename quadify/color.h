@@ -5,7 +5,6 @@
 #define RGB 3
 #define DEPTH 24
 
-
 typedef struct Color {
 	uint8 r, g, b;
 }Color;

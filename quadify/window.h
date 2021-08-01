@@ -5,6 +5,7 @@
 typedef struct Window {
 	SDL_Window *window;
 	SDL_Surface *surface;
+	SDL_Renderer *renderer;
 	uint w;
 	uint h;
 }Window;

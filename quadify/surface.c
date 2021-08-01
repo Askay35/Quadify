@@ -11,13 +11,11 @@ const unsigned int bmask = 0x00ff0000;
 #endif
 
 SDL_Surface* loadSurfaceFromFile(char* path) {
-	SDL_Surface *surface = NULL;
-
 	SDL_Surface *loaded_surface = IMG_Load(path);
 	if (loaded_surface == NULL) {
 		SDL_Log("Failed loading image %s! SDL Error: %s\n", path, SDL_GetError());
 	}
-	return surface;
+	return loaded_surface;
 }
 
 
