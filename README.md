@@ -16,7 +16,9 @@ The second animation - without border.
 ### Usage
 
   quadify.exe <input file path> <output file extension(.png or .jpg)> <repeat count>
-    or
+  
+  or
+  
   quadify.exe <input file path> <output file extension(.png or .jpg)>
   
   You can change repeat count by UP and DOWN arrow-buttons.
