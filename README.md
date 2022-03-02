@@ -1,7 +1,7 @@
 # Quadify
 
 Computer art based on quadtrees.
-Programm gets the input image, that is split into four quads. Each quad is filled with an averaged color based on the colors inside it. The quad with the largest difference between coloros is split into four new quads inside it. This process is repeated N times. You can set repeat count by command line argument or by arrow-buttons. 
+Programm gets the input image, that is split into four quads. Each quad is filled with an averaged color based on the colors inside it. The quad with the largest difference between colors is split into four new quads inside it. This process is repeated N times. You can set repeat count by command line argument or by arrow-buttons. 
 
 ### Animation
 
